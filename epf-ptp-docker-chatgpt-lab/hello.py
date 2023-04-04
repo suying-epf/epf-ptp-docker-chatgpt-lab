@@ -31,8 +31,14 @@ def generate_code():
     message = f"Generate code in {language} that {content}"
 
     # TODO: Use ChatGPT to generate code in the specified language.
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": message}]
+    completion = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=message,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.5
     )
-    return completion['choices'][0]['messages']['content']
+    result = completion.choices[0].text.strip()
+
+    return result
